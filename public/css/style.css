@@ -1,0 +1,117 @@
+body{
+    margin: 1rem;
+    font-family: sans-serif;
+}
+.navbar{
+    height:5rem;
+    background-color: white;
+}
+.navbar-brand{
+    color: #fe424d;
+    font-size:larger;
+    }
+.fa-compass{
+    color:#fe424d;
+    font-size: 2rem;
+}
+.nav-link{
+    color: #222222;
+}
+.f-info-links a{
+    text-decoration: none;
+    color: #222222;
+}
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+.f-info-links, .f-info-socials, .f-info-brand{
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.f-info-socials i{
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+}
+.f-info{
+    text-align: center;
+    height: 8rem;
+    background-color: #ebebeb;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+}
+
+/* cards */
+
+.head{
+    text-align: center;
+}
+.card{
+    border: none;
+    margin-bottom: 2rem;
+}
+.card-img-top{
+    border-radius: 1rem;
+    width: 100%;
+    object-fit: cover;
+    height:20rem;
+}
+.show-image{
+    height: 30rem;
+}
+.card-body{
+    padding: 0;   
+}
+.show-link{
+    text-decoration: none;
+}
+.card-img-overlay{
+    opacity: 0.7;
+    color: white;
+    font-size: large;
+    text-align: end;
+}
+.card-img-overlay:hover{
+    opacity: 1;
+    font-size: larger;
+}
+/* new page */
+.mb-3{
+    border-radius: 0.5rem;
+    background-color: rgb(231, 219, 219);
+    padding: 0.6rem;
+    color: #ab2c34;
+}
+.mb-3:hover{
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
+}
+.form-control:hover{
+    border: 1px solid rgb(17, 16, 16);
+}
+.form-label{
+    font-weight: 560;
+}
+.new-listing{
+    width: 50%;
+    margin: auto;
+}
+/* show page */
+.show-div{
+    width: 60%;
+    height: 60%;
+    margin: auto;
+}
+.btns{
+    display: flex;
+    justify-content: space-between;
+}
+.review-card{
+    border: 1px solid black;
+    border-radius: 1rem;
+    width: 60%;
+    margin-bottom: 10px;
+    margin-inline: auto;
+}
