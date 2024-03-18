@@ -11,8 +11,8 @@
           <b><%= listing.country %></b> <br><br>
           <div class="btns">
             <a class="btn btn-dark" href="/listings/<%= listing._id %>/edit">Edit</a>
-            <form class="btn btn-danger" method="POST" 
-                action="/listings/<%= listing._id %>?_method=DELETE">
+            <form class="btn btn-danger" action="/listings/<%= listing._id %>?_method=DELETE"  method="POST">
+
                 Delete
             </form>
           </div>
@@ -54,13 +54,11 @@
               Rating by user: <%= review.rating %>
               <br>
               comment: <%= review.comment %>
-              <form action="/listings/<%= listing.id %>/reviews/<%= review._id %>?_method=DELETE" method ="Post" >
+              <form action="/listings/<%= listing.id %>/reviews/<%= review._id %>?_method=DELETE" method ="POST" >
                 <button class="btn btn-sm btn-dark mb-2">Delete</button>
               </form>      
             </div>   
-              
-          <% } %>
-          
+          <% } %>  
         </div>
       </div>
 </body>

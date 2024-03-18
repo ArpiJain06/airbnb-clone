@@ -9,11 +9,10 @@ const listingSchema = new Schema({
     },
     description:String,
     image:{
-        type:String,
-        default:"https://www.freepik.com/free-photo/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-blue-sky-background_11408956.htm#query=beach&position=0&from_view=keyword&track=sph&uuid=521f65a2-8107-4d4f-8ddc-c1bf0ed9a1bb",
+        type:String, 
         set : (v)=>
          v=== "" ? 
-         "https://www.freepik.com/free-photo/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-blue-sky-background_11408956.htm#query=beach&position=0&from_view=keyword&track=sph&uuid=521f65a2-8107-4d4f-8ddc-c1bf0ed9a1bb" 
+         "https://images.pexels.com/photos/70441/pexels-photo-70441.jpeg?auto=compress&cs=tinysrgb&w=600"
          :v,
     },
     price:Number,
