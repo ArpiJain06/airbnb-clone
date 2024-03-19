@@ -8,6 +8,8 @@ const engine = require('ejs-mate');
 const expressError = require("./utils/expressError");
 const listings = require("./routes/listing.js");
 const review = require("./routes/review.js");
+const session = require("express-session");
+const flash = require("connect-flash");
 
 app.use(methodOverride("_method"));
 app.use(express.urlencoded({extended:true}));
@@ -29,10 +31,28 @@ async function main() {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+const sessionOptions = {
+    secret: "mysupersecrestcode",
+    resave:false,
+    saveUninitialized:true,
+    cookie: {
+        expires: Date.now()+1000*60*60*24*7,//this is in millisecs
+        maxAge:1000*60*60*24*7,// no. of millisecs in 1 week
+        httpOnly: true        
+    },
+};
+
 app.get('/', (req, res) => {
     res.send('Hello World!')
 });
 
+app.use(session(sessionOptions));
+app.use(flash());
+app.use((req,res,next)=>{
+    res.locals.success= req.flash("success");
+    res.locals.error= req.flash("error");
+    next();
+});
 
 app.use("/listings", listings);
 app.use("/listings/:id/reviews", review);
