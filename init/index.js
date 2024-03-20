@@ -14,7 +14,15 @@ async function main() {
 };
 const initializeDB= async()=>{
     await Listing.deleteMany({}); // delete all data that was already present
-    await Listing.insertMany(newData.data);
-    console.log("data has been added");
+    if (!Array.isArray(newData)) {
+        console.error("Error: newData is not an array");
+        return;
+    }
+    const updatedData = newData.map(obj => ({
+        ...obj,
+        owner: "65facbc1e0a17429439f0a82"
+    }));
+    await Listing.insertMany(updatedData);
+    console.log("Data has been added");
 }
 initializeDB();

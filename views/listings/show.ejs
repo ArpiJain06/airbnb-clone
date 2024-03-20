@@ -5,20 +5,27 @@
         <img src="<%= listing.image %>" 
           class="card-img-top show-image" 
           alt="listing image">
-        <div class="card-body"><br><%= listing.description %> <br>
+        <div class="card-body"><br>
+          Owned by: <%= listing.owner.username %> <br>
+          <%= listing.description %> <br>
           <b>&#x20B9; <%= listing.price.toLocaleString("en-IN") %></b>/night<br>
           <b><%= listing.location %>,</b>
           <b><%= listing.country %></b> <br><br>
-          <div class="btns">
-            <a class="btn btn-dark" href="/listings/<%= listing._id %>/edit">Edit</a>
-            <form action="/listings/<%= listing._id %>?_method=DELETE"  method="POST">
-              <button class="btn btn-danger"> Delete </button>
-            </form>
-          </div>
+          <% if(currUser && currUser._id.equals(listing.owner._id)){%>
+            <!-- these buttons will only be visible when the current use is the owner  -->
+            <div class="btns">
+              <a class="btn btn-dark" href="/listings/<%= listing._id %>/edit">Edit</a>
+              <form action="/listings/<%= listing._id %>?_method=DELETE"  method="POST">
+                <button class="btn btn-danger"> Delete </button>
+              </form>
+            </div>
+            <% } %>
         </div>
       </div>
       <hr>
       <div class="head">
+        <% if(currUser){ %>
+        <!-- only when the user is logged in , he can add a review -->
         <h3>Leave a Review</h3>
         <form 
           action="/listings/<%= listing.id %>/reviews" 
@@ -46,13 +53,14 @@
           </div>
           <button class="btn btn-outline-dark">Submit</button>
         </form>  
+        <% } %>
         <div >
           <h3>All Reviews</h3>
           <% for(review of listing.reviews){ %>
             <div class="review-card">
-              Rating by user: <%= review.rating %>
-              <br>
-              comment: <%= review.comment %>
+              <p class="card-title">@<%= review.author.username %></p>
+              <p class="card-text">Rating: <%= review.rating %> <br>
+              Comment: <%= review.comment %></p>      
               <form action="/listings/<%= listing.id %>/reviews/<%= review._id %>?_method=DELETE" method ="POST" >
                 <button class="btn btn-sm btn-dark mb-2">Delete</button>
               </form>      
