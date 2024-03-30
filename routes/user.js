@@ -46,9 +46,11 @@ router.post("/login",
     }),
     async(req,res)=>{
         req.flash("success","Login Successful");
+        // console.log(res.locals.redirectUrl);
         //if res.locals.redirectUrl does not have something than it goes to listings 
-        let redirectUrl= res.locals.redirectUrl || "/listings"
-        res.redirect(redirectUrl);
+        // let redirectUrl= res.locals.redirectUrl;
+        // res.redirect(redirectUrl);
+        res.redirect("/listings");
 });
 router.get("/logout",(req, res, next)=>{
     req.logout((err)=>{
