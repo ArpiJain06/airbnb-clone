@@ -1,3 +1,7 @@
+if(process.env.Node_ENV != "production"){
+    require('dotenv').config();
+}
+console.log(process.env.SECRET);
 const express = require('express');
 const app = express();
 const port = 8080;
@@ -15,7 +19,9 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 // requires the model with Passport-Local Mongoose plugged in
 const User = require("./models/user.js");
-
+const Listing = require("./models/listings.js");
+const listingController = require("./controllers/listings.js");
+const wrapAsync = require("./utils/wrapAsync.js");
 app.use(methodOverride("_method"));
 app.use(express.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname,"/public")));
@@ -31,7 +37,8 @@ main()
 });
 app.engine('ejs', engine);
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/airbnb');
+//   await mongoose.connect('mongodb://127.0.0.1:27017/airbnb');
+  await mongoose.connect('mongodb+srv://arpitajain0609:VyrbtLGwPH6mYi3f@cluster0.7in3jds.mongodb.net/');
 }
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -46,10 +53,6 @@ const sessionOptions = {
         httpOnly: true        
     },
 };
-
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-});
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -74,6 +77,20 @@ app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
+//search request
+app.get('/search', async (req, res) => {
+    const query = req.query.q;
+    console.log(query);
+    Listing.find({ title: query })
+    .then(listings => {
+        console.log(listings);
+        res.render("listings/show.ejs", {listings});
+    }) 
+    .catch (error=> {
+        console.error("Error: ",error);
+        res.status(500).json({ message: 'Internal server error' });
+    })
+});
 
 // if the route entered by user is wrong
 app.all("*",(req,res,next)=>{
@@ -86,4 +103,3 @@ app.use((err, req, res, next)=>{
     // res.status(statusCode).send(message);
     res.status(statusCode).render("error.ejs",{err});
 });
-

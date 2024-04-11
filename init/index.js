@@ -10,7 +10,7 @@ main()
 });
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/airbnb');
+  await mongoose.connect('mongodb+srv://arpitajain0609:VyrbtLGwPH6mYi3f@cluster0.7in3jds.mongodb.net/');
 };
 const initializeDB= async()=>{
     await Listing.deleteMany({}); // delete all data that was already present
@@ -20,7 +20,7 @@ const initializeDB= async()=>{
     }
     const updatedData = newData.map(obj => ({
         ...obj,
-        owner: "65facbc1e0a17429439f0a82"
+        owner: "6613dc0f2746cf84c7957a42"
     }));
     await Listing.insertMany(updatedData);
     console.log("Data has been added");

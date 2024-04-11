@@ -9,11 +9,8 @@ const listingSchema = new Schema({
     },
     description:String,
     image:{
-        type:String, 
-        set : (v)=>
-         v=== "" ? 
-         "https://images.pexels.com/photos/70441/pexels-photo-70441.jpeg?auto=compress&cs=tinysrgb&w=600"
-         :v,
+        url:String,
+        filename:String,
     },
     price:Number,
     location:String,

@@ -34,7 +34,6 @@ module.exports.isLoggedIn= (req,res, next)=>{
 }
 
 module.exports.saveRedirectUrl = (req, res, next)=>{
-    console.log(req.session.redirectUrl);
     if(req.session.redirectUrl){
         res.locals.redirectUrl= req.session.redirectUrl;
         //save it in locals so that it's value cannot be changed by passport
@@ -46,7 +45,7 @@ module.exports.isOwner= async(req, res, next)=>{
     let {id}= req.params;
     let listing = await Listing.findById(id);
     if(res.locals.currUser && !listing.owner._id.equals(res.locals.currUser._id)){
-        req.flash("error", "access denied, you are not the owner");
+        req.flash("error", "access denied");
         return res.redirect(`/listings/${id}`);
     }
     next();
@@ -55,10 +54,10 @@ module.exports.isOwner= async(req, res, next)=>{
 module.exports.isAuthor= async(req, res, next)=>{
     let {id, reviewId}= req.params;
     let review= await Review.findById(reviewId);
-    // console.log(review);
-    if(res.locals.currUser && !review.author.equals(res.locals.currUser._id)){
-        req.flash("error", "access denied");
-        return res.redirect(`/listings/${id}`);
-    }
+    console.log(review);
+    // if(!review.author.equals(res.locals.currUser._id));{
+    //     req.flash("error", "access denied");
+    //     return res.redirect(`/listings/${id}`);
+    // }
     next();
 };
