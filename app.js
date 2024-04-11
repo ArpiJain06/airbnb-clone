@@ -5,6 +5,7 @@ console.log(process.env.SECRET);
 const express = require('express');
 const app = express();
 const port = 8080;
+const dbUrl = process.env.ATLAS_URL;
 const mongoose = require('mongoose');
 const path= require("path");
 const methodOverride = require("method-override");
@@ -14,6 +15,7 @@ const listingsRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -38,12 +40,24 @@ main()
 app.engine('ejs', engine);
 async function main() {
 //   await mongoose.connect('mongodb://127.0.0.1:27017/airbnb');
-  await mongoose.connect('mongodb+srv://arpitajain0609:VyrbtLGwPH6mYi3f@cluster0.7in3jds.mongodb.net/');
+  await mongoose.connect(dbUrl);
 }
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto:{
+        secret: process.env.SECRET,
+    },
+    touchAfter:24*3600, // after 24hrs
+});
+
+store.on("error", ()=>{
+    console.log("ERROR IN MONGO SESSION STORE", err);
+})
 const sessionOptions = {
+    store,// mongo-session info goes to session
     secret: "mysupersecrestcode",
     resave:false,
     saveUninitialized:true,
