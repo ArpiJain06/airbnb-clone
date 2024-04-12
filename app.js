@@ -91,6 +91,10 @@ app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
+app.get("/", (req, res)=>{
+    res.redirect("/listings");
+})
+
 //search request
 app.get('/search', async (req, res) => {
     const query = req.query.q;
